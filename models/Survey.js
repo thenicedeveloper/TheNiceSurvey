@@ -2,8 +2,14 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const surveySchema = new Schema({
-    //body
+    title: String,
+    questions: [],
+    recipients: [],
+    survey: {
+        taken: false,
+        id: String
+    }
 })
 
 
-mongoose.model('surveys', surveySchema);
+module.exports = mongoose.model('surveys', surveySchema);

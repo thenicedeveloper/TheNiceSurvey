@@ -60,9 +60,10 @@ const App = () => {
             <Modal />
           </div>   
           
-          <div className="col-12">
+          {/* We can work on this feature later */}
+          {/* <div className="col-12">
             <button className="btn btn-lg btn-success mx-auto">Create Survey PDF</button>
-          </div>
+          </div> */}
                            
           
         </div>

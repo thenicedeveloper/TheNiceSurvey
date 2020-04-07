@@ -6,6 +6,19 @@ const path          = require('path');
 const config = require("./config/config");
 const app = express();
 
+(async () =>{
+    try {
+        console.log("Connecting to mongoose...")
+        await mongoose.connect(config.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+        console.log("Connected!")
+    } catch (error) {
+        handleError(error);
+    }
+})()
+
+require("./models/Survey");
+
+//Static files
 app.use(express.static('client/build'));
 
 app.use(
@@ -19,7 +32,8 @@ app.use(
 
 
 //Define routes
-//app.use('/', require('./routes/api'))
+app.use('/api/', require('./routes/surveyRoutes'))
+
 
 
 const PORT          = process.env.PORT || 5000;

@@ -32,7 +32,7 @@ app.use(
 
 
 //Define routes
-app.use('/api/', require('./routes/surveyRoutes'))
+app.use('/api/surveys', require('./routes/surveyRoutes'))
 
 
 

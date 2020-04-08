@@ -4,7 +4,8 @@ const { Schema } = mongoose;
 const surveySchema = new Schema({
     title: String,
     questions: [],
-    recipients: [],
+    recipients: [{email: String, responded: Boolean}],
+    token: String,
     survey: {
         taken: false,
         id: String

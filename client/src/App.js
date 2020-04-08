@@ -1,6 +1,7 @@
 import React, {useState, useEffect, createContext, useContext} from 'react';
 import Sample_Survey from './components/Sample_Survey';
 import Modal from './components/Modal';
+import Created_Surveys from './components/Created_Surveys';
 export const QuestionContext = createContext();
 
 
@@ -67,6 +68,7 @@ const App = () => {
                            
           
         </div>
+        <Created_Surveys />
         <Sample_Survey />
       </div>
     </QuestionContext.Provider>

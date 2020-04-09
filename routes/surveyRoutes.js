@@ -6,10 +6,10 @@ const Survey = mongoose.model('surveys');
 
 //GET public @route to /api/surveys/ 
 router.get('/',async (req, res) => {
-    Survey.find({}, (err, data) => { 
-        
+    Survey.find({}).sort('survey').exec((err, data) =>{ 
+
         res.send(data)      
-        
+    
     })
 
     // let survey1 = new Survey({

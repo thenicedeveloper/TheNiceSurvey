@@ -21,10 +21,10 @@ function Created_Surveys () {
 
     return(
         <div className="row justify-content-center">
-            <h3 className="col-sm-12 mt-5">Your Surveys</h3>            
+            <h3 className="col-sm-12 mt-5 text-center">Your Surveys</h3>            
             { 
                 allSurveys.map((data) => (     
-                        <div className="card col-8 col-md-3 mt-1 mx-3 bg-info my-1" key={data._id}>              
+                        <div className="card col-8 col-md-3 mt-1 mx-3 bg-info my-1 text-center" key={data._id}>              
                             <h5 className="card-title"> {data.title} </h5> 
                             <button className="btn btn-md btn-dark">View</button>
                             <div className="card-body text-white">Hello dear</div>

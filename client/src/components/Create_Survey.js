@@ -39,20 +39,21 @@ function Create_Survey(){
         //question, parentElement, elementName
         let questionsContainer = document.getElementById("questionsContainer")
         let addQuestionInput = document.getElementById("addQuestionInput");
-        let q = state.name;        
-        createElement(q, questionsContainer, 'h1')
         addQuestionInput.value = ""
-        // setQuestions(questions => {
-        //     return [...questions, q]
-        // })               
+        let q = state.name;        
+        createElement(q, questionsContainer, 'h1')        
+        setQuestions(questions => { 
+            return [...questions, q]
+        })  
+        setState({name:""})                   
         
     }
 
     return(
         <div className="mt-2 bg-white text-left text-dark m-2 p-3">
-            <form>
+            <form onSubmit={e => { e.preventDefault(); }}> 
                 <h4 className="text-center">Create Survey</h4>
-                <select className="form-control form-control-md w-25 mx-auto" onChange={(e)=> {handleSelect(e)}}>
+                <select className="form-control form-control-md  mx-auto select-input" onChange={(e)=> {handleSelect(e)}}>
                     <option> Select </option>
                     <option>Add Question</option>
                     <option > Add CheckBox</option>
@@ -60,7 +61,7 @@ function Create_Survey(){
                 { showQuestionInput &&
                     <div>
                         {/* Add question input */}
-                        <div className="form-group mt-2 w-75 mx-auto"> 
+                        <div className="form-group mt-2 question-input mx-auto"> 
                             <input 
                                 id="addQuestionInput" 
                                 type="text" 
@@ -73,16 +74,16 @@ function Create_Survey(){
                             />
                         </div> 
                         {/* Add button for Add question input*/}
-                        <div 
+                        <button 
                             className="d-block mx-auto btn btn-md bg-dark text-white w-25 mt-1" 
                             onClick={(e)=> addQuestion(e)}>
                                 Add
-                        </div>
+                        </button>
                     </div>                    
                 }
                 { showCheckBoxInput &&
                     <div>
-                        <div className="form-group mt-3 mx-auto mb-2" style={{maxWidth:"20%"}}>
+                        <div className="form-group mt-3 mx-auto mb-2 label-input" >
                             <input type="text" className="form-control" id="formGroupExampleInput" placeholder="Enter Label Name" />
                         </div> 
                         <div className="d-block mx-auto btn btn-md bg-dark text-white w-25 mt-0 pt-0">Add</div>

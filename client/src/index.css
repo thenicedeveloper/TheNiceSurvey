@@ -12,7 +12,24 @@ code {
     monospace;
 }
 
-@media only screen and (max-width: 600px) {
+.select-input{
+  width: 30%;
+}
+.question-input{
+  width: 60%
+}
+
+.label-input{
+  width: 40%
+}
+
+.fa-trash-alt:hover{
+  color: red;
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+@media only screen and (max-width: 700px) {
   .q-labels {
     max-width: 75%;
     margin: 0 auto
@@ -22,4 +39,16 @@ code {
     max-width: 25%;
     margin: 0 auto;
   }
+
+  .select-input{
+    width: 50%;
+  }
+
+  .question-input{
+    width: 100%
+  }
+  .label-input{
+    width: 50%
+  }
+
 }

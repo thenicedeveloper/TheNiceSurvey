@@ -1,21 +1,21 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {QuestionContext} from '../App';
-import useCreateElement from '../useCreateElement'; //This is a custom hook that returns an LI back
+import useCreateElement from './useCreateElement'; //This is a custom hook that returns an LI back
 import useRemoveElement from '../useRemoveElement'; //This is a custom hook that returns an LI back
+import { set } from 'mongoose';
 // import { v4 as uuidv4 } from 'uuid';
-
 
 
 function Create_Survey(){
     //State Variables
     const [showQuestionInput, setShowQuestionInput] = useState(false)
     const [showCheckBoxInput, setCheckBoxInput] = useState(false)
-   
-
+    const [questions, setQuestions] = useState([])
+    const {createElement} = useCreateElement()  
+    const [state, setState] = useState({name: ''})
 
     let handleSelect = (e) => {
         e.preventDefault()
-        console.log(e.target.value)
         if(e.target.value != '' && e.target.value.trim() === 'Add Question'){
             setCheckBoxInput(false)
             setShowQuestionInput(!showQuestionInput)
@@ -29,10 +29,22 @@ function Create_Survey(){
         
     }
 
+    let questionInputChange = (e) => {
+        e.preventDefault()
+        setState({[e.target.name]: e.target.value})
+    }
+
     let addQuestion = (e) =>{
         e.preventDefault()
         //question, parentElement, elementName
-        let questionElement = document.getElementById('addQuestionInput')
+        let questionsContainer = document.getElementById("questionsContainer")
+        let addQuestionInput = document.getElementById("addQuestionInput");
+        let q = state.name;        
+        createElement(q, questionsContainer, 'h1')
+        addQuestionInput.value = ""
+        // setQuestions(questions => {
+        //     return [...questions, q]
+        // })               
         
     }
 
@@ -52,9 +64,12 @@ function Create_Survey(){
                             <input 
                                 id="addQuestionInput" 
                                 type="text" 
+                                name="name"
                                 className="form-control" 
-                                id="formGroupExampleInput" 
+                                // id="formGroupExampleInput" 
                                 placeholder="Enter your question" 
+                                value={state.name}
+                                onChange={(e) => questionInputChange(e)}
                             />
                         </div> 
                         {/* Add button for Add question input*/}
@@ -72,9 +87,12 @@ function Create_Survey(){
                         </div> 
                         <div className="d-block mx-auto btn btn-md bg-dark text-white w-25 mt-0 pt-0">Add</div>
                     </div>                    
-                }
-                               
+                }                               
             </form>
+
+            <div id="questionsContainer" className="text-left">
+
+            </div>
 
         </div>
         

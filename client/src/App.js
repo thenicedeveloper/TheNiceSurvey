@@ -28,10 +28,7 @@ const App = () => {
             </div>
             
           </div>
-          {surveyForm && <Create_Survey />} 
-          
-          
-              
+          {surveyForm && <Create_Survey />}
           
         </div>
         <Get_Surveys />

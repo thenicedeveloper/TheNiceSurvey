@@ -3,7 +3,7 @@ import {QuestionContext} from '../App';
 import useCreateElement from './useCreateElement'; //This is a custom hook that returns an LI back
 import useRemoveElement from '../useRemoveElement'; //This is a custom hook that returns an LI back
 import { set } from 'mongoose';
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 
 function Create_Survey(){
@@ -13,6 +13,7 @@ function Create_Survey(){
     const [questions, setQuestions] = useState([])
     const {createElement} = useCreateElement()  
     const [state, setState] = useState({name: ''})
+    let element_id = ""
 
     let handleSelect = (e) => {
         e.preventDefault()
@@ -40,13 +41,23 @@ function Create_Survey(){
         let questionsContainer = document.getElementById("questionsContainer")
         let addQuestionInput = document.getElementById("addQuestionInput");
         addQuestionInput.value = ""
-        let q = state.name;        
-        createElement(q, questionsContainer, 'h1')        
+        let q = state.name.trim();
+        if(q.trim().length == 0){
+            return
+        } 
+        //Not using the create element function       
+        // createElement(q, questionsContainer, 'h1')          
         setQuestions(questions => { 
             return [...questions, q]
         })  
         setState({name:""})                   
         
+    }
+    let removeItem = (e, idx) => {
+        e.preventDefault()
+        // let parent = e.target.parentNode.parentNode
+        // let child = e.target.parentNode
+        setQuestions(questions.filter(item => item != questions[idx]))
     }
 
     return(
@@ -92,12 +103,14 @@ function Create_Survey(){
             </form>
 
             <div id="questionsContainer" className="text-left">
-
+                {
+                    questions.map((question, idx) => (
+                        <h1 id={uuidv4()} key={idx}> {question} <i onClick={(e) => removeItem(e, idx)} className="fa fa-trash-alt fa-xs ml-2"/></h1>
+                    ))
+                }
             </div>
 
         </div>
-        
-        
     )
 
 

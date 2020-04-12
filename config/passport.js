@@ -1,8 +1,10 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const config = require("./config");
 const User = require("../models/User");
+const bcrypt = require("bcrypt");
 
 // user.id is the shortcut to the auto generated mongodb _id
 // The reason why we use mongodb _id is because we might use facebook, github, twitter strategies
@@ -57,4 +59,26 @@ passport.use(
     }
   )
 );
+
+passport.use( new LocalStrategy( { usernameField: "email" }, (email, password, done) => {
+    // Search for user
+    User.findOne( { email: email})
+    .then( user => {
+      if(!user){
+        return done(null, false, { message: "User is not registered!"});
+      }
+      // Match password
+      bcrypt.compare(password, user.password, (err, isMatch) => {
+        if(err) throw err;
+        if(isMatch){
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Password is incorrect!"});
+        }
+      });
+    })
+    .catch( err => {
+      console.log(`Error: ${err}`);
+    })
+}) );
 

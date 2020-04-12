@@ -1,8 +1,8 @@
-import React, {useState, useEffect, createContext, useContext} from 'react';
-import Sample_Survey from './components/Sample_Survey';
+import React, {useState, createContext} from 'react';
+import SampleSurvey from './components/Sample_Survey';
 // import Modal from './components/Modal';
-import Create_Survey from './components/Create_Survey';
-import Get_Surveys from './components/Get_Surveys'
+import CreateSurvey from './components/Create_Survey';
+import GetSurveys from './components/Get_Surveys'
 export const QuestionContext = createContext();
 
 
@@ -28,11 +28,11 @@ const App = () => {
             </div>
             
           </div>
-          {surveyForm && <Create_Survey />}
+          {surveyForm && <CreateSurvey />}
           
         </div>
-        <Get_Surveys />
-        <Sample_Survey />
+        <GetSurveys />
+        <SampleSurvey />
       </div>
     </QuestionContext.Provider>
   )
@@ -47,28 +47,6 @@ export default App;
 
 //Removed code
 
-// const [addedQuestionAlert, setAddedQuestionAlert] = useState(false) 
-// const [viewQuestionsButton, setViewQuestionsButton] = useState(false) 
-
-// let createSurveyButton = document.getElementById('createSurveyButton')
-    // if(e.target.innerText === "Create Survey"){  
-    //   e.target.innerText = "Done"
-    // } else if(e.target.innerText === "Done"){
-    //   e.target.innerText = "Create Survey"
-    // }
-
-// const addQuestion = (e) => {
-//   e.preventDefault()
-//   const questionInput = document.getElementById('q_input')
-//   const questionInputTrimmed = questionInput.value.trim()
-//   if(questionInputTrimmed !== "" && questionInputTrimmed !== null){ 
-//     questionInput.value = ''
-//     setQuestionsArray((questionsArray)=> {        
-//       return [...questionsArray, questionInputTrimmed]
-//     })
-//     setAddedQuestionAlert(true)    
-//   } 
-// }
 // useEffect( () => {      
 //     return () =>{           
 //         setTimeout(() => {              
@@ -77,16 +55,3 @@ export default App;
 //     }      
 // },[addedQuestionAlert])
 
-{/* <div className="col-12">
-  { addedQuestionAlert && <p id="questionAddedAlert" className="btn btn-md alert-success w-25 mx-auto">Question added!</p>}
-</div>          */}
-                  
-
-{/* <div className="col-12">
-  <Modal />
-</div>    */}
-
-{/* We can work on this feature later */}
-{/* <div className="col-12">
-  <button className="btn btn-lg btn-success mx-auto">Create Survey PDF</button>
-</div> */}

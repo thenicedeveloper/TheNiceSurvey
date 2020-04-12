@@ -1,9 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {QuestionContext} from '../App.js'; ////////////Note the context between brackets!!!
-import Modal from './Modal';
+import React, {useEffect, useState} from 'react';
+// import {QuestionContext} from '../App.js'; ////////////Note the context between brackets!!!
 const axios = require('axios').default;
-//need a key for the map? may need uuid
-//import { v4 as uuidv4 } from 'uuid';
 
 
 function Created_Surveys () {

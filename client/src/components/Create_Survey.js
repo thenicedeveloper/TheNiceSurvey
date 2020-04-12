@@ -1,8 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react';
-import {QuestionContext} from '../App';
-import useCreateElement from './useCreateElement'; //This is a custom hook that returns an LI back
-import useRemoveElement from '../useRemoveElement'; //This is a custom hook that returns an LI back
-import { set } from 'mongoose';
+import React, {useState} from 'react';
+// import {QuestionContext} from '../App';
+// import { set } from 'mongoose';
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -11,16 +9,15 @@ function Create_Survey(){
     const [showQuestionInput, setShowQuestionInput] = useState(false)
     const [showCheckBoxInput, setCheckBoxInput] = useState(false)
     const [questions, setQuestions] = useState([])
-    const {createElement} = useCreateElement()  
+    // const {createElement} = useCreateElement()  
     const [state, setState] = useState({name: ''})
-    let element_id = ""
-
+    
     let handleSelect = (e) => {
         e.preventDefault()
-        if(e.target.value != '' && e.target.value.trim() === 'Add Question'){
+        if(e.target.value !== '' && e.target.value.trim() === 'Add Question'){
             setCheckBoxInput(false)
             setShowQuestionInput(!showQuestionInput)
-        } else if(e.target.value != '' && e.target.value === 'Add CheckBox'){            
+        } else if(e.target.value !== '' && e.target.value === 'Add CheckBox'){            
             setShowQuestionInput(false)
             setCheckBoxInput(true)
         } else {
@@ -38,11 +35,11 @@ function Create_Survey(){
     let addQuestion = (e) =>{
         e.preventDefault()
         //question, parentElement, elementName
-        let questionsContainer = document.getElementById("questionsContainer")
+        // let questionsContainer = document.getElementById("questionsContainer")
         let addQuestionInput = document.getElementById("addQuestionInput");
         addQuestionInput.value = ""
         let q = state.name.trim();
-        if(q.trim().length == 0){
+        if(q.trim().length === 0){
             return
         } 
         //Not using the create element function       
@@ -57,7 +54,7 @@ function Create_Survey(){
         e.preventDefault()
         // let parent = e.target.parentNode.parentNode
         // let child = e.target.parentNode
-        setQuestions(questions.filter(item => item != questions[idx]))
+        setQuestions(questions.filter(item => item !== questions[idx]))
     }
 
     return(

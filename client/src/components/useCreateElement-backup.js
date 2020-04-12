@@ -4,7 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 const useCreateElement = (question, parentElement, elementName) => {    
     
     function createElement(question, parentElement, elementName){
-        console.log((question.trim().length !== 0 && elementName.startsWith('h')))
+        //double check the conditions
         if((question.trim().length !== 0 && elementName === 'p') || (question.trim().length !== 0 && elementName.startsWith('h'))){
             console.log("If statement")
             let element = document.createElement(`${elementName}`)

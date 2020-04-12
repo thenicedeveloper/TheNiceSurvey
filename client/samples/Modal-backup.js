@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext} from 'react';
 import {QuestionContext} from '../App';
-import useCreateElement from './useCreateElement'; //This is a custom hook that returns an LI back
-import useRemoveElement from '../useRemoveElement'; //This is a custom hook that returns an LI back
+// import useCreateElement from './useCreateElement'; //This is a custom hook that returns an LI back
+// import useRemoveElement from '../useRemoveElement'; //This is a custom hook that returns an LI back
 import { v4 as uuidv4 } from 'uuid';
 
 
@@ -12,8 +12,8 @@ const Modal = () => {
   ///////////////////////////Problem:
   //problem: function is executing twice, everytime it re-renders
 
-  const createElement = useCreateElement(); 
-  const removeElement = useRemoveElement(); 
+  // const createElement = useCreateElement(); 
+  // const removeElement = useRemoveElement(); 
   
   useEffect(()=>{
     let modalBody = document.getElementById('modalBody')

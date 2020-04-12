@@ -8,12 +8,13 @@ function Create_Survey(){
     //State Variables
     const [showYesNoInput, setShowYesNoInput] = useState(false)
     const [showCheckBoxInput, setCheckBoxInput] = useState(false)
+    // const [questionCount, setQuestionCount] = useState(0)
     const [survey, setSurvey] = useState([])    
-    let [name, setName] = useState('')
-    let [label, setLabel] = useState('')
+    const [state, setState] = useState({name:'', label:''})
     
     let handleSelect = (e) => {
         e.preventDefault()
+        console.log("handle select", e.target.value)
         if(e.target.value !== '' && e.target.value.trim() === 'CheckBox'){
             setShowYesNoInput(false)
             setCheckBoxInput(true)
@@ -30,38 +31,40 @@ function Create_Survey(){
 
     let questionInputChange = (e) => {
         e.preventDefault()
-        setName(e.target.value)
+        setState({[e.target.name]: e.target.value})
     }
 
     let labelInputChange = (e) => {
         e.preventDefault()
-        setLabel(e.target.value)
+        setState({[e.target.name]: e.target.value})
     }
 
-    let addQuestion = (e) =>{
-        e.preventDefault()
-        //Check that user selects a response type
-        if(!(showCheckBoxInput) && !(showYesNoInput)){
-            alert("Select respose type")
-            return
-        }
-        let q = name.trim();
-        let l = label.trim(); 
-        //check that inputs are not empty:
-        q.length > 0 ? console.log("Question Entered") : alert("Enter a question")       
-        l.length > 0 ? console.log("Label Entered") : alert("Enter a label")  
-          
+    // let addQuestion = (e) =>{
+    //     e.preventDefault()
+    //     let q = state.name.trim();
+    //     let label = state.name.trim();
+    //     console.log(showCheckBoxInput)
+    //     console.log(`name: ${label} label: ${label}`)
+    //     if(q.trim().length === 0){
+    //         return
+    //     }           
+    //     // console.log(survey)
+    //     // setState({name:""})                   
         
-        console.log("Question is good")
+    // }
+    // let addCheckBox = (e) => {
+    //     console.log(e)
+    // }
+    // let removeItem = (e, idx) => {
+    //     e.preventDefault()
+    //     // let parent = e.target.parentNode.parentNode
+    //     // let child = e.target.parentNode
+    //     // setQuestions(questions.filter(item => item !== questions[idx]))
+    // }
 
-    }
-    let addCheckBox = (e) => {
-        console.log(e)
-    }
-    let removeItem = (e, idx) => {
-        e.preventDefault()
-        // setQuestions(questions.filter(item => item !== questions[idx]))
-    }
+    // useEffect(() => {
+    //     setState({name:"", label: ""})
+    // }, [])
 
     return(
         <div className="mt-2 bg-white text-left text-dark m-2 p-3">
@@ -76,8 +79,7 @@ function Create_Survey(){
                         id="formGroupExampleInput" 
                         placeholder="Enter your question" 
                         onChange={(e) => questionInputChange(e)}
-                        value={name} 
-                        required
+                        value={state.name} 
                         
                     />
                 </div> 
@@ -89,22 +91,25 @@ function Create_Survey(){
                     </select>
                 </div>
                 
+                    {/* Add button for Add question input*/}
+ 
                 { showCheckBoxInput &&
                     <div className="form-group mt-3 mx-auto mb-3 label-input" >
                         <input 
                             name='label'
                             type="text" 
                             className="form-control" 
-                            id="labelInput" 
+                            id="formGroupExampleInput" 
                             placeholder="Enter Label Name" 
                             onChange={(e) => labelInputChange(e)}
-                            value={label}         
+                            value={state.label}         
                         />
                     </div>
                 }
                 <button 
                     className="d-block mx-auto btn btn-md bg-dark text-white w-25 mt-1" 
-                    onClick={(e)=> addQuestion(e)}>
+                    onClick={(e)=> console.log(e)}>
+                        {/* addQuestion(e) */}
                         Add
                 </button>                               
             </form>

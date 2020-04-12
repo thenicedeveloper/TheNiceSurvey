@@ -92,4 +92,15 @@ module.exports = (app) => {
       });
     }
   });
+
+  // Local strategy Login
+  app.post("/api/login", (req, res, next) => {
+    passport.authenticate("local", {
+      successRedirect: "/dashboard",
+      failureRedirect: "/api/login",
+      //failureFlash: true
+    })(req, res, next);
+  });
+
+
 };

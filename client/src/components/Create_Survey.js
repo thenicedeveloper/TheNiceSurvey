@@ -11,6 +11,7 @@ function Create_Survey(){
     const [survey, setSurvey] = useState([])    
     let [name, setName] = useState('')
     let [label, setLabel] = useState('')
+    let [checkBoxes, setCheckBoxes] = useState(0);
     
     let handleSelect = (e) => {
         e.preventDefault()
@@ -33,6 +34,11 @@ function Create_Survey(){
         setName(e.target.value)
     }
 
+    let boxesInputChange = (e) => {
+        e.preventDefault()
+        setCheckBoxes(e.target.value)
+    }
+
     let labelInputChange = (e) => {
         e.preventDefault()
         setLabel(e.target.value)
@@ -42,18 +48,21 @@ function Create_Survey(){
         e.preventDefault()
         //Check that user selects a response type
         if(!(showCheckBoxInput) && !(showYesNoInput)){
-            alert("Select respose type")
+            alert("Select Respose Type!")
             return
         }
         let q = name.trim();
         let l = label.trim(); 
+        let c = checkBoxes;
         //check that inputs are not empty:
         q.length > 0 ? console.log("Question Entered") : alert("Enter a question")       
-        l.length > 0 ? console.log("Label Entered") : alert("Enter a label")  
-          
-        
+        l.length > 0 ? console.log("Label Entered") : alert("Enter a label")
         console.log("Question is good")
-
+        setSurvey(survey => {
+            return[...survey, {question: q, label: l, checkboxes: c}]
+        })
+        setName("") //Reset name state (question input)
+        setLabel("") //Reset label state (label input)
     }
     let addCheckBox = (e) => {
         console.log(e)
@@ -90,16 +99,28 @@ function Create_Survey(){
                 </div>
                 
                 { showCheckBoxInput &&
-                    <div className="form-group mt-3 mx-auto mb-3 label-input" >
-                        <input 
-                            name='label'
-                            type="text" 
-                            className="form-control" 
-                            id="labelInput" 
-                            placeholder="Enter Label Name" 
-                            onChange={(e) => labelInputChange(e)}
-                            value={label}         
-                        />
+                    <div className="text-center">
+                        <div className="row d-block">
+                            <label className="" htmlFor="numberOfBoxes">How many check boxes? </label>
+                            <input 
+                                className="col-3 ml-1" 
+                                type="number" 
+                                name="checkBoxes" min="0" max="8"
+                                onChange={(e) => boxesInputChange(e)} 
+                            />                          
+                        </div>                        
+                        <div className="form-group mt-3 mx-auto mb-3 label-input" >
+                            <input 
+                                name='label'
+                                type="text" 
+                                className="form-control" 
+                                id="labelInput" 
+                                placeholder="Enter Label Name" 
+                                onChange={(e) => labelInputChange(e)}
+                                value={label}         
+                            />                            
+                        </div>
+                        
                     </div>
                 }
                 <button 
@@ -110,14 +131,20 @@ function Create_Survey(){
             </form>
 
             <div id="questionsContainer" className="text-left">
-                {/* {
-                    questions.map((question, idx) => (
-                        <h1 id={uuidv4()} key={idx}> {question} <i onClick={(e) => removeItem(e, idx)} className="fa fa-trash-alt fa-xs ml-2"/></h1>
+                {
+                    survey.map((surveyObj, idx) => (
+                        <div>
+                            <h1 id={uuidv4()} key={idx}> {surveyObj.question} <i onClick={(e) => removeItem(e, idx)} className="fa fa-trash-alt fa-xs ml-2"/></h1>
+                            <div className="form-check form-check-inline">
+                                <input className="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1" />
+                                <label className="form-check-label" htmlFor="inlineCheckbox1">{surveyObj.label}</label>
+                            </div>
+                        </div>
                     ))
                 }
                 {
                     
-                } */}
+                }
             </div>
 
         </div>

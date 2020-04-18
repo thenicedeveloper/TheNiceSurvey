@@ -1,13 +1,13 @@
 import React, {useState, createContext} from 'react';
-import SampleSurvey from './components/Sample_Survey';
-// import Modal from './components/Modal';
-import CreateSurvey from './components/Create_Survey';
-import GetSurveys from './components/Get_Surveys'
-import ShowLabels from './components/ShowLabels';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import NavBar from './components/layout/Navbar';
+import Main from './components/Main';
+import Landing from './components/Landing';
+import Login from './components/Login';
 export const myContext = createContext();
 
 
-const App = () => {
+function App(){
   const [questionsArray, setQuestionsArray] = useState([])
   const [surveyForm, setSurveyForm] = useState(false)  
   const [survey, setSurvey] = useState([]) 
@@ -21,32 +21,23 @@ const App = () => {
 
   const showSurveyForm = (e)=>{
     e.preventDefault()
-    setSurveyForm(!surveyForm)
+     setSurveyForm(!surveyForm)
     setShowLabels(false)
   }
 
   return (
-    <myContext.Provider 
-      value={[showSurveyForm, survey, setSurvey, showYesNoInput, setShowYesNoInput, showCheckBoxInput, setCheckBoxInput, showLabelInputs, 
-      setShowLabelInputs, name, setName, checkBoxes, setCheckBoxes, showLabels, setShowLabels, labels, setLabels]}>
+    <myContext.Provider     
+      value={[surveyForm, showSurveyForm, survey, setSurvey, showYesNoInput, setShowYesNoInput, showCheckBoxInput, setCheckBoxInput, showLabelInputs, 
+      setShowLabelInputs, name, setName, checkBoxes, setCheckBoxes, showLabels, setShowLabels, labels, setLabels]}>       
       
-      <div className="container  m-2 mx-auto d-block">
-        <h1 className="text-center"> TheNiceSurvey </h1>
-        <div id="createSurvey" className=" bg-dark text-white p-4 rounded">
-          <div className="row text-center">
-            <h4 className="d-block col-12 p-1 text-center">Survey Creator</h4>
-            <div className="col-sm-12 text-center">
-              <div id="createSurveyButton" className="btn btn-lg btn-info" onClick={(e)=>showSurveyForm(e)}>Create Survey</div>
-            </div>
-            
-          </div>
-          {surveyForm && <CreateSurvey />}
-          
-          {showLabels && <ShowLabels />}
-        </div>
-        <GetSurveys />
-        <SampleSurvey />
-      </div>
+      <NavBar />
+      <Switch>
+
+        <Route path="/" component={Main} exact />
+        <Route path="/landing" component={Landing} exact />
+        <Route path="/login" component={Login} exact />
+
+      </Switch>
     </myContext.Provider>
   )
 }

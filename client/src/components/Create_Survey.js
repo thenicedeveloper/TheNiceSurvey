@@ -10,7 +10,7 @@ import {myContext} from '../App'
 function Create_Survey(){
 
     ////////////////////////////////////////////////////context
-    const [showSurveyForm, survey, setSurvey, showYesNoInput, setShowYesNoInput, showCheckBoxInput, setCheckBoxInput, showLabelInputs, 
+    const [surveyForm, showSurveyForm, survey, setSurvey, showYesNoInput, setShowYesNoInput, showCheckBoxInput, setCheckBoxInput, showLabelInputs, 
         setShowLabelInputs, name, setName, checkBoxes, setCheckBoxes, showLabels, setShowLabels, labels, setLabels] =  useContext(myContext)
 
     /////////////////////////////////////////////////State Variables     

@@ -1,9 +1,11 @@
-import React, {useState} from 'react';
-
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+/* global gapi */
 const Login = () => {
 
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+
     async function handleSubmit(e){
         e.preventDefault()
     }
@@ -17,6 +19,14 @@ const Login = () => {
     let handlePassword = (e) => {
         setPassword(e.target.value)
     }
+
+    let googleSingIn = async (e) =>{
+        e.preventDefault()
+        //Waiting for cors to be allowed in the backend
+        let res = await axios.get("/auth/google")
+        res.then(data => console.log(data))
+    }
+
 
     return (
         <div className="container">
@@ -34,9 +44,7 @@ const Login = () => {
                                 placeholder="Enter email" 
                                 value={email}
                                 onChange={handleEmail}
-                            />
-
-                            
+                            />                            
                         </div>
                         <div className="form-group">
                             <label for="exampleInputPassword1">Password</label>
@@ -51,9 +59,15 @@ const Login = () => {
                             />
                         </div>
                         <button type="submit" className="btn btn-primary d-block mx-auto">Submit</button>
-                    </form>    
+                    </form>
                 </div>            
             </div> 
+
+
+
+            {/* ///////////////////////////////////////////////////////////////Google Login */}
+            <button className="btn btn-lg bg-dark text-white d-block mx-auto" onClick={googleSingIn}>Login With Google</button>
+
         </div>
                
     )

@@ -1,81 +1,46 @@
-import React, {useState, useEffect, useContext} from 'react';
-import ReactHtmlParser from 'react-html-parser';
-import { v4 as uuidv4 } from 'uuid';
-import useAddQuestion from './customHooks/useAddQuestion'
-import {myContext} from '../App'
+import React, {useState, useEffect} from 'react';
+// import { v4 as uuidv4 } from 'uuid';
 
 
-
+// const checkAnswerType = (e) => {
+//     e.preventDefault()
+//     console.log(e)
+// }
 
 function Create_Survey(){
 
     ////////////////////////////////////////////////////context
-    const [surveyForm, showSurveyForm, survey, setSurvey, showYesNoInput, setShowYesNoInput, showCheckBoxInput, setCheckBoxInput, showLabelInputs, 
-        setShowLabelInputs, name, setName, checkBoxes, setCheckBoxes, showLabels, setShowLabels, labels, setLabels] =  useContext(myContext)
-
+    const [showCheckBoxInput, setShowCheckBoxInput] = useState(false)
+    const [ questionInputValue, setQuestionInputValue] = useState("")
     /////////////////////////////////////////////////State Variables     
-    let addQuestion = useAddQuestion();
-    let {number} = checkBoxes;
+
     
 
     ///////////////////////////////////////////////////Functions
+    let handleQuestionInput = (e) =>{
+        e.preventDefault()
+        setQuestionInputValue(e.target.value)
+    }
+
     let handleSelect = (e) => {
         e.preventDefault()
-        if(e.target.value !== '' && e.target.value.trim() === 'CheckBox'){
-            setShowYesNoInput(false)
-            setCheckBoxInput(true)
-            
-        } else if(e.target.value !== '' && e.target.value === 'Yes/No'){            
-            setCheckBoxInput(false)
-            setShowYesNoInput(!showYesNoInput)
-        } else {
-            setCheckBoxInput(false)
-            setShowYesNoInput(false)
-        }
+        console.log(e.target.value === 'CheckBox')
+        setShowCheckBoxInput(!showCheckBoxInput)
+    }    
+
+    let handleNumberOfBoxes = (e) => {
         
     }
-    let questionInputChange = (e) => {
-        e.preventDefault()
-        setName(e.target.value.trim())
+
+
+    let addQuestionButton = (e) => {
+        // console.log(checkAnswerType(e))
     }
 
-    let boxesInputChange = (e) => {
-        e.preventDefault()
-        //{number: 0, labels:{}}
-        let input = Number(e.target.value.trim())
-        if(input > 8 || input < 0) {
-            e.target.value = ""
-            alert('Not a valid value!')
-            return false
-        } 
-        setCheckBoxes({...checkBoxes, number: input})        
-    }
-
-    let handleLabels = (e) => {
-        e.preventDefault()
-        setLabels(e.target.value)
-    }
-
-    let handleAddQuestion = (e) => {        
-        e.preventDefault()
-        if(!name){
-            alert('Enter a question!')
-            return false
-        } else if(!showCheckBoxInput){
-            alert('Select a response type!')
-            return false
-        }
-        console.log(checkBoxes)
-        showSurveyForm(e)
-        setShowLabels(true)
-    }
+    useEffect(()=> {
+        console.log(questionInputValue)
+    })
     
-    let removeItem = (e, idx) => {
-        e.preventDefault()
-        // setQuestions(questions.filter(item => item !== questions[idx]))
-    }
-
-
     return(
         <div className="mt-2 bg-white text-left text-dark m-2 p-3">
             <form onSubmit={e => { e.preventDefault(); }}> 
@@ -83,13 +48,13 @@ function Create_Survey(){
                 <div className="form-group mt-2 question-input mx-auto">
                     <label className="lead" htmlFor="name">Type your question:</label> 
                     <input 
-                        name='name'
+                        name='qInputValue'
                         type="text" 
                         className="form-control" 
                         id="formGroupExampleInput" 
                         placeholder="Enter your question" 
-                        onChange={(e) => questionInputChange(e)}
-                        value={name} 
+                        onChange={(e) => handleQuestionInput(e)}
+                        value={questionInputValue} 
                         required
                         
                     />
@@ -110,11 +75,11 @@ function Create_Survey(){
                                 className="col-3 ml-1" 
                                 type="number" 
                                 name="checkBoxes" min="0" max="8"
-                                value={number}
-                                onChange={(e) => boxesInputChange(e)} 
+                                // value={number}
+                                onChange={(e) => handleNumberOfBoxes(e)} 
                             />                          
                         </div>                        
-                        {showLabels && 
+                        {/* {showLabels && 
                             <div className="form-group mt-3 mx-auto mb-3 label-input" >
                                 <input 
                                     name='label'
@@ -126,13 +91,13 @@ function Create_Survey(){
                                     value={labels}         
                                 />                            
                             </div>
-                        }
+                        } */}
                         
                     </div>
                 }
                 <button 
                     className="d-block mx-auto btn btn-md bg-dark text-white w-25 mt-1" 
-                    onClick={(e)=> handleAddQuestion(e)}>
+                    onClick={(e)=> addQuestionButton(e)}>
                         Add
                 </button>                               
             </form>

@@ -1,27 +1,14 @@
 import React, {useEffect, useState, useContext} from 'react';
-import {myContext} from '../App'
+import {showLabelsContext} from '../App'
 
 
-let ShowLabels = (props) =>{
+let ShowLabels = () =>{
 
     ///////////////////////////////////Context
     ////////////////////////////////////////////////////context
-    const [showSurveyForm, survey, setSurvey, showYesNoInput, setShowYesNoInput, showCheckBoxInput, setCheckBoxInput, showLabelInputs, 
-        setShowLabelInputs, name, setName, checkBoxes, setCheckBoxes, showLabels, setShowLabels, labels, setLabels] =  useContext(myContext)
+    const [] =  useContext(showLabelsContext)
 
 
-    //state
-    // let count = 0;
-    // let mystr = ''
-
-    // useEffect((mystr)=>{
-        
-    //     while(count < checkBoxes){
-    //         mystr + 'label'
-    //     }
-
-
-    // },[])
 
     return (
         <div>

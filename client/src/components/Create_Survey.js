@@ -59,9 +59,8 @@ function Create_Survey(){
         selectInput !== "checkbox" && alert("Select an answer type!") 
         if ((selectInput === "checkbox") && (0 < Number(tempNumCheckBoxes)) && Number(tempNumCheckBoxes < 6)){
             // addQuestion(e, tempSurvey);
-            setSurvey([...survey, tempSurvey])
+            setSurvey([...survey, tempSurvey])            
             setShowCheckBoxInput(!showCheckBoxInput)
-            setSelectInput("")
             let checkBoxes = createCheckBoxes(tempSurvey)
             setElement(checkBoxes)
             setTempSurvey({question:""})
@@ -71,8 +70,11 @@ function Create_Survey(){
     }
     useEffect(() => {
         let  parentElement = document.getElementById('checkBoxInputs');
-        element && parentElement.appendChild(element)
-        
+        element && parentElement.appendChild(element)        
+        setSelectInput("")
+        setTempSurvey({
+            question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempRadioButton: null, labels: []
+        })
     },[element])
 
     /////////////////////////////////////////////////State Variables   

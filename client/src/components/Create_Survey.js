@@ -64,6 +64,7 @@ function Create_Survey(){
             setSelectInput("")
             let checkBoxes = createCheckBoxes(tempSurvey)
             setElement(checkBoxes)
+            setTempSurvey({question:""})
             // setTempSurvey({question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempRadioButton: null, labels: []})
         }
         

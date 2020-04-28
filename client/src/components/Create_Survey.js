@@ -8,8 +8,9 @@ function Create_Survey(){
     const [showCheckBoxInput, setShowCheckBoxInput] = useState(false)
     const [showLabels, setShowLabels] = useState(false)    
     const [tempSurvey, setTempSurvey] = useState({
-        question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempAnswerType:"", tempRadioButton: null, labels: []
+        question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempRadioButton: null, labels: []
     })
+    const [selectInput, setSelectInput] = useState("")
     // const [tracker, setTracker] = useState(0)
     const [survey, setSurvey] = useState([])
 
@@ -24,9 +25,8 @@ function Create_Survey(){
 
     let handleSelect = (e) => {
         e.preventDefault()
-        console.log(e.target.value === 'CheckBox')
-        setShowCheckBoxInput(!showCheckBoxInput)
-        setTempSurvey({...tempSurvey, tempAnswerType:"checkbox"})
+        setShowCheckBoxInput(!showCheckBoxInput)        
+        setSelectInput("checkbox")
     }    
 
     let handleNumberOfBoxes = (e) => {
@@ -59,16 +59,19 @@ function Create_Survey(){
             alert("Enter a question!")
             return false;
         }
-        tempAnswerType !== "checkbox" && alert("Select an answer type!") 
-        if ((tempAnswerType === "checkbox") && (0 < Number(tempNumCheckBoxes)) && Number(tempNumCheckBoxes < 6)){
+        selectInput !== "checkbox" && alert("Select an answer type!") 
+        if ((selectInput === "checkbox") && (0 < Number(tempNumCheckBoxes)) && Number(tempNumCheckBoxes < 6)){
             console.log("Nice")
             // addQuestion(e, tempSurvey);
             setSurvey([...survey, tempSurvey])
+            setShowCheckBoxInput(!showCheckBoxInput)
+            setSelectInput("")
+            setTempSurvey({question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempRadioButton: null, labels: []})
         }
         
     }
     /////////////////////////////////////////////////State Variables   
-    let {question, tempNumCheckBoxes, tempAnswerType, tempRadioButton, labels} = tempSurvey;  
+    let {question, tempNumCheckBoxes, tempRadioButton, labels} = tempSurvey;  
     return(
         <div className="mt-2 bg-white text-left text-dark m-2 p-3">
             <form onSubmit={e => { e.preventDefault(); }}> 
@@ -88,7 +91,7 @@ function Create_Survey(){
                     />
                 </div>                 
                 <div className="form-group">
-                    <select className="form-control form-control-md  mx-auto select-input mb-2" onChange={(e)=> {handleSelect(e)}} required>
+                    <select className="form-control form-control-md  mx-auto select-input mb-2" value={selectInput} onChange={(e)=> {handleSelect(e)}} required>
                         <option defaultValue> Response Type </option>
                         <option> CheckBox </option>
                         <option> Yes/No </option>

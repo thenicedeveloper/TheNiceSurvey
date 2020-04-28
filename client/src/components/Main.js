@@ -28,9 +28,7 @@ function Main() {
     let localState = readLocalStorage()
     //initial state is set to local storage value:
     const [showSurveyForm, setShowSurveyForm] = useState(localState.showSurveyForm) 
-    const [survey, setSurvey] = useState([{question:"", labels:{1: "label 1" , 2: "label 2"}, checkboxes: 0}])
-    const [one, setOne] = useState(1)
-    const [sampleObj, setSampleObj] = useState({})
+    const [survey, setSurvey] = useState([])
 
 
     ///////////////////////////////////////////////////////////////////////////////Local Functions
@@ -38,13 +36,6 @@ function Main() {
     let handleShowSurveyForm = ()=> { //Show or Hide the form to create a survey
         setShowSurveyForm(!showSurveyForm)
     }
-
-    useEffect(()=> {
-        let idx = 3;        
-        let myObj = {...survey[0].labels, ...survey[0].labels.idx="label 3"}
-        setSampleObj(myObj)
-            
-    },[])
 
     //useEffect
     useEffect(() => {
@@ -57,20 +48,19 @@ function Main() {
             <h1 className="text-center"> TheNiceSurvey </h1>
             <div id="createSurvey" className=" bg-dark text-white p-4 rounded">
                 <div className="row text-center">
-                <h4 className="d-block col-12 p-1 text-center">Survey Creator</h4>
-                <div className="col-sm-12 text-center">
-                    <div id="createSurveyButton" className="btn btn-lg btn-info" onClick={(e)=>handleShowSurveyForm(e)}>Create Survey</div>
-                </div>
+                    <h4 className="d-block col-12 p-1 text-center">Survey Creator</h4>
+                    <div className="col-sm-12 text-center">
+                        <div id="createSurveyButton" className="btn btn-lg btn-info" onClick={(e)=>handleShowSurveyForm(e)}>Create Survey</div>
+                    </div>
                 
                 </div>
                   {showSurveyForm && <CreateSurvey />}
                 
             </div>
-            {console.log(sampleObj)}
-            {/*Get_Surveys component*/}
+
             <GetSurveys />
 
-            {/*Sample_Surveys component*/}
+  
             <SampleSurveys />
         </div>
     )

@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import useAddQuestion from './customHooks/useAddQuestion';
+import useCreateCheckBoxes from './customHooks/useCreateCheckBoxes';
 
 function Create_Survey(){
+    //Custom hooks
+    const createCheckBoxes = useCreateCheckBoxes()
 
     ////////////////////////////////////////////////////Hooks
     const [showCheckBoxInput, setShowCheckBoxInput] = useState(false)
@@ -13,9 +15,7 @@ function Create_Survey(){
     const [selectInput, setSelectInput] = useState("")
     // const [tracker, setTracker] = useState(0)
     const [survey, setSurvey] = useState([])
-
-    //Custom hooks
-    const addQuestion = useAddQuestion()
+    const [element, setElement] = useState()    
    
     ///////////////////////////////////////////////////Functions
     let handleQuestionInput = (e) =>{
@@ -33,14 +33,12 @@ function Create_Survey(){
         e.preventDefault()
         let currentTarget = Number(e.currentTarget.value); 
         console.log(currentTarget)            
-        if(currentTarget > tempNumCheckBoxes){ 
-            console.log("tracker is more")      
+        if(currentTarget > tempNumCheckBoxes){    
             setTempSurvey( (tempSurvey) => { 
                 return {...tempSurvey, tempNumCheckBoxes: currentTarget, labels:[...labels, {id: uuidv4(), value:"", amount: String(currentTarget)}]}
             })
          }else if (currentTarget < tempNumCheckBoxes){
-             console.log("tracker is less")
-            let temp = labels.splice(-1, 1)[0]
+             let temp = labels.splice(-1, 1)[0]
             setTempSurvey((tempSurvey) =>{
                 return {...tempSurvey, tempNumCheckBoxes: currentTarget, labels: labels.filter(val => val !== temp) }
             })      
@@ -49,7 +47,6 @@ function Create_Survey(){
 
     let handleLabels = (index) => (e) => {
         e.preventDefault()
-        console.log("index:", index)
         setTempSurvey({...tempSurvey}, labels[index].value = e.target.value)
     }
     ////////////////////////////////////////////////Add Question
@@ -61,15 +58,22 @@ function Create_Survey(){
         }
         selectInput !== "checkbox" && alert("Select an answer type!") 
         if ((selectInput === "checkbox") && (0 < Number(tempNumCheckBoxes)) && Number(tempNumCheckBoxes < 6)){
-            console.log("Nice")
             // addQuestion(e, tempSurvey);
             setSurvey([...survey, tempSurvey])
             setShowCheckBoxInput(!showCheckBoxInput)
             setSelectInput("")
-            setTempSurvey({question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempRadioButton: null, labels: []})
+            let checkBoxes = createCheckBoxes(tempSurvey)
+            setElement(checkBoxes)
+            // setTempSurvey({question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempRadioButton: null, labels: []})
         }
         
     }
+    useEffect(() => {
+        let  parentElement = document.getElementById('checkBoxInputs');
+        element && parentElement.appendChild(element)
+        
+    },[element])
+
     /////////////////////////////////////////////////State Variables   
     let {question, tempNumCheckBoxes, tempRadioButton, labels} = tempSurvey;  
     return(
@@ -140,14 +144,19 @@ function Create_Survey(){
                     onClick={(e)=> addQuestionButton(e)}>
                         Add
                 </button>  
-                {survey.length > 0 && 
-                    survey.map(questionObj => {
-                        let {question, id} = questionObj;
-                        return (
-                            <h4 key={id}>{question} {' '}</h4>
-                        )
-                    })                    
-                }                             
+                <div id="checkBoxInputs" className='text-dark'>
+                       {survey.length > 0 && 
+                        survey.map(questionObj => {
+                            let {question, id} = questionObj;
+                            return (
+                                <div key={id} >
+                                    <h4 >{question} {' '}</h4>                                     
+                                </div>                                                          
+                            )
+                        })                    
+                    }  
+                </div>
+                                           
             </form>            
 
         </div>

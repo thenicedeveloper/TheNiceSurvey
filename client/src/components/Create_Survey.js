@@ -8,7 +8,7 @@ function Create_Survey(){
     const [showCheckBoxInput, setShowCheckBoxInput] = useState(false)
     const [showLabels, setShowLabels] = useState(false)    
     const [tempSurvey, setTempSurvey] = useState({
-        tempQuestion: "", tempNumCheckBoxes: 0, tempAnswerType:"", tempRadioButton: null, labels: []
+        question: "", id: uuidv4(), tempNumCheckBoxes: 0, tempAnswerType:"", tempRadioButton: null, labels: []
     })
     // const [tracker, setTracker] = useState(0)
     const [survey, setSurvey] = useState([])
@@ -19,7 +19,7 @@ function Create_Survey(){
     ///////////////////////////////////////////////////Functions
     let handleQuestionInput = (e) =>{
         e.preventDefault()
-        setTempSurvey({...tempSurvey, tempQuestion:e.target.value})
+        setTempSurvey({...tempSurvey, question:e.target.value})
     }
 
     let handleSelect = (e) => {
@@ -36,7 +36,7 @@ function Create_Survey(){
         if(currentTarget > tempNumCheckBoxes){ 
             console.log("tracker is more")      
             setTempSurvey( (tempSurvey) => { 
-                return {...tempSurvey, tempNumCheckBoxes: currentTarget, labels:[...labels, {id: uuidv4(), name:"", amount: String(currentTarget)}]}
+                return {...tempSurvey, tempNumCheckBoxes: currentTarget, labels:[...labels, {id: uuidv4(), value:"", amount: String(currentTarget)}]}
             })
          }else if (currentTarget < tempNumCheckBoxes){
              console.log("tracker is less")
@@ -50,24 +50,25 @@ function Create_Survey(){
     let handleLabels = (index) => (e) => {
         e.preventDefault()
         console.log("index:", index)
-        setTempSurvey({...tempSurvey}, labels[index].name = e.target.value)
+        setTempSurvey({...tempSurvey}, labels[index].value = e.target.value)
     }
     ////////////////////////////////////////////////Add Question
     let addQuestionButton = (e) => {
         e.preventDefault()        
-        if (tempQuestion === ""){
+        if (question === ""){
             alert("Enter a question!")
             return false;
         }
         tempAnswerType !== "checkbox" && alert("Select an answer type!") 
         if ((tempAnswerType === "checkbox") && (0 < Number(tempNumCheckBoxes)) && Number(tempNumCheckBoxes < 6)){
             console.log("Nice")
-            addQuestion(e, tempSurvey);
+            // addQuestion(e, tempSurvey);
+            setSurvey([...survey, tempSurvey])
         }
         
     }
     /////////////////////////////////////////////////State Variables   
-    let {tempQuestion, tempNumCheckBoxes, tempAnswerType, tempRadioButton, labels} = tempSurvey;  
+    let {question, tempNumCheckBoxes, tempAnswerType, tempRadioButton, labels} = tempSurvey;  
     return(
         <div className="mt-2 bg-white text-left text-dark m-2 p-3">
             <form onSubmit={e => { e.preventDefault(); }}> 
@@ -81,7 +82,7 @@ function Create_Survey(){
                         id="formGroupExampleInput" 
                         placeholder="Enter your question" 
                         onChange={(e) => handleQuestionInput(e)}
-                        value={tempQuestion} 
+                        value={question} 
                         required
                         
                     />
@@ -111,7 +112,7 @@ function Create_Survey(){
                         {labels.length > 0 &&
                             labels.map(label => {
                                 let index = labels.indexOf(label)
-                                let {id, name, amount} = label;
+                                let {id, value, amount} = label;
                                 return (
                                     <div key={id} className="form-group mt-3 mx-auto mb-3 label-input" >
                                         <input 
@@ -120,9 +121,9 @@ function Create_Survey(){
                                             className="form-control" 
                                             id="labelInput" 
                                             placeholder="Enter Label Name" 
-                                            onChange={handleLabels(index)}
-                                            required
-                                            value={name}         
+                                            onChange={handleLabels(index)}                                            
+                                            value={value}  
+                                            required       
                                         />                            
                                     </div>
                                 )
@@ -135,7 +136,15 @@ function Create_Survey(){
                     className="d-block mx-auto btn btn-md bg-dark text-white w-25 mt-1" 
                     onClick={(e)=> addQuestionButton(e)}>
                         Add
-                </button>                               
+                </button>  
+                {survey.length > 0 && 
+                    survey.map(questionObj => {
+                        let {question, id} = questionObj;
+                        return (
+                            <h4 key={id}>{question} {' '}</h4>
+                        )
+                    })                    
+                }                             
             </form>            
 
         </div>

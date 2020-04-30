@@ -85,22 +85,19 @@ module.exports = (app) => {
                   console.log(`Error: ${err}`);
                   res.send("Failed");
                 });
-                
             });
           });
         }
       });
     }
   });
-
-  // Local strategy Login
-  app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", {
-      successRedirect: "/dashboard",
-      failureRedirect: "/api/login",
-      //failureFlash: true
-    })(req, res, next);
-  });
-
+  
+  app.post("/api/login",
+    passport.authenticate("local", null),
+    (req, res, info) => {
+      console.log(`User logged in `);
+      res.send("success");
+    }
+  ); 
 
 };

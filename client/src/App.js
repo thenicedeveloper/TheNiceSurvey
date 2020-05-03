@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import NavBar from "./components/layout/Navbar";
 import Main from "./components/Main";
 import Landing from "./components/Landing"
-
+import Register from "./components/register/register";
 import Login from "./components/Login";
 export const myContext = createContext();
 
@@ -13,11 +13,11 @@ function App() {
       <Router>
         <NavBar />
         <Switch>
-          <Route exact path="/" component={Main} exact />
-          <Route exact path="/main" component={Main} exact />
-          <Route path="/landing" component={Landing} exact />
-          
-          <Route exact path="/login" component={Login} exact />
+          <Route exact path="/" component={Main} />
+          <Route exact path="/main" component={Main} />
+          <Route exact path="/landing" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
         </Switch>
       </Router>
     </myContext.Provider>

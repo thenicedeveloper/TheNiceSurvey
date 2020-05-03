@@ -75,7 +75,7 @@ const Login = () => {
             </div> 
 
             <div className="col-4 d-block mx-auto">
-                <a className="btn btn-lg bg-dark text-white d-block mx-auto" href="http://localhost:5000/auth/google">Login With Google</a>
+                <a className="btn btn-lg bg-dark text-white d-block mx-auto" href="/auth/google">Login With Google</a>
             </div>           
             
         </div>

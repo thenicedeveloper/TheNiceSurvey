@@ -20,7 +20,7 @@ module.exports = (app) => {
     (req, res) => {
       // res.send(req.user);
       console.log(`Login ${JSON.stringify(req.user)}`);
-      res.redirect("/main");
+      res.redirect("/landing");
     }
   );
 

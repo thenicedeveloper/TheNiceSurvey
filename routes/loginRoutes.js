@@ -18,9 +18,9 @@ module.exports = (app) => {
     "/auth/google/callback",
     passport.authenticate("google"),
     (req, res) => {
-      res.send(req.user);
+      // res.send(req.user);
       console.log(`Login ${JSON.stringify(req.user)}`);
-      // res.redirect("/blog");
+      res.redirect("/main");
     }
   );
 

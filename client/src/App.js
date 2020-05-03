@@ -15,9 +15,10 @@ function App(){
       
       <NavBar />
       <Switch>
-        <Route path="/" component={Main} exact />
+        <Route exact path="/" component={Main} exact />
+        <Route exact path="/main" component={Main} exact />
         {/* <Route path="/landing" component={Landing} exact /> */}
-        <Route path="/login" component={Login} exact />
+        <Route exact path="/login" component={Login} exact />
 
       </Switch>
     </myContext.Provider>

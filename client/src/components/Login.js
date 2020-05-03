@@ -73,7 +73,9 @@ const Login = () => {
                     </form>
                 </div>            
             </div> 
-
+            <div >
+              <a href="/register">If new user register here</a>
+            </div>
             <div className="col-4 d-block mx-auto">
                 <a className="btn btn-lg bg-dark text-white d-block mx-auto" href="/auth/google">Login With Google</a>
             </div>           

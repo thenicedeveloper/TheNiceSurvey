@@ -24,7 +24,7 @@ require("./config/passport");
 const app = express();
 // middleware Making it available on req.body
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 //Static files
 app.use(express.static('client/build'));
 

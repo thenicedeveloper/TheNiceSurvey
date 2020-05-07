@@ -83,7 +83,7 @@ module.exports = (app) => {
                 })
                 .catch((err) => {
                   console.log(`Error: ${err}`);
-                  res.send("Failed");
+                  res.send("Failed saving new user!");
                 });
             });
           });

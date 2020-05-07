@@ -7,7 +7,9 @@ const Login = () => {
     //State
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    const [userStatus, setUserStatus] = useState("");
 
+    
     const handleFormSubmit = async(e) => {
         e.preventDefault();
 
@@ -23,9 +25,11 @@ const Login = () => {
                 window.location = "/";
             }
         } catch (err){
-            console.log(`Axios post failed! ${err}`);
+            console.log(`Axios post failed! ${err.response.data} ${err.response.status}`);
             // ToDo: Notify user with modal form or just show message on login form
+            if(err.response.status === 401){
 
+            }
         }       
     }
 

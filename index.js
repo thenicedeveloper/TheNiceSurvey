@@ -25,6 +25,9 @@ const app = express();
 // middleware Making it available on req.body
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// app.use(express.urlencoded({ extended: true }))
+// .use(express.json());
+
 //Static files
 app.use(express.static('client/build'));
 
